@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<div id="main">
+
+    <div class="body">
+        <div class="emptyLeft"></div>
+        <div class="message">
+            <div class="text"><input id="mainInput" type="text" onkeydown="createTask(event)"></div>
+        </div>
+        <div class="emptyRight"></div>
+    </div>
+</div>
+
+<script>
+    var mainInput = document.getElementById("mainInput");
+    mainInput.focus();
+
+    /*generate task with text*/
+    function createMessage(body) {
+        var container = document.createElement('div');
+
+        container.innerHTML = '<div class="body"> \
+        <div class="tick"></div> \
+        <div class="message">\
+        <div class="text">' + body + '</div>\
+        </div> \
+        <div class="delete"></div> \
+  </div>';
+
+        return container.firstChild;
+    }
+
+
+    var mainDiv = document.getElementById('main');
+
+
+    mainDiv.onmousedown = function(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement;
+
+        /*if click red - delete task*/
+        if(target.className == 'delete') {
+            target.parentNode.style.display = 'none';
+        }
+
+        /*if click green - select like done task*/
+        if(target.className == 'tick') {
+
+            if(target.style.backgroundColor == 'green' || target.style.backgroundColor == ''){
+                target.style.backgroundColor = 'greenyellow';
+
+                var strike = document.createElement('strike');
+                target.parentNode.getElementsByClassName('text')[0].insertBefore(strike, target.parentNode.getElementsByClassName('text')[0].firstChild);
+                strike.appendChild(strike.nextSibling);
+
+/*
+                var temp = target.parentNode.getElementsByClassName('text')[0].innerHTML;
+                target.parentNode.getElementsByClassName('text')[0].innerHTML = '<strike>' + temp + '</strike>';
+*/
+            }else{
+                target.style.backgroundColor = 'green';
+
+                var temp = target.parentNode.getElementsByTagName('strike')[0].innerHTML;
+                target.parentNode.getElementsByClassName('text')[0].innerHTML = temp;
+            }
+
+        }
+
+    }
+
+    function createTask(e){
+        e = e || window.event;
+        /* it adds task, only after pushing Enter*/
+        if( e.keyCode != 13 ){
+            return;
+        }
+
+
+        var messageElem = createMessage(mainInput.value);
+
+        document.getElementById("main").appendChild(messageElem);
+        mainInput.value = '';
+    }
+</script>
+
+<style>
+    .text {
+        margin: 15px;
+    }
+    .tick {
+        float: left;
+        text-align: center;
+        border: 1px solid gray;
+        width: 60px;
+        height: 60px;
+        background-color: green;
+    }
+    .body {
+        width: 626px;
+        height: 62px;
+        border: 1px solid gray;
+        /*text-align: center;*/
+    }
+    .message {
+        float: left;
+        width: 500px;
+        height: 60px;
+        border: 1px solid gray;
+        text-align: left;
+    }
+    .delete {
+        float: left;
+        width: 60px;
+        height: 60px;
+        border: 1px solid gray;
+        background-color: red;
+    }
+    .emptyLeft {
+        float: left;
+        text-align: center;
+        border: 1px solid gray;
+        width: 60px;
+        height: 60px;
+        background-color: green;
+    }
+    .emptyRight {
+        float: left;
+        width: 60px;
+        height: 60px;
+        border: 1px solid gray;
+        background-color: red;
+    }
+    #main {
+        width: 626px;
+        border: 10px solid gray;
+        margin: auto;
+    }
+</style>
+
+
+</body>
+</html>
