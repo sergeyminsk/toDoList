@@ -6,12 +6,12 @@
 <body>
 <div id="main">
 
-    <div class="body">
+    <div class="bodyTop">
         <div class="emptyLeft"></div>
-        <div class="message">
-            <div class="text"><input id="mainInput" type="text" onkeydown="createTask(event)"></div>
+        <div class="messageTop">
+            <input id="mainInput" type="text" onkeydown="createTask(event)">
         </div>
-        <div class="emptyRight"></div>
+
     </div>
 </div>
 
@@ -75,7 +75,7 @@
     function createTask(e){
         e = e || window.event;
         /* it adds task, only after pushing Enter*/
-        if( e.keyCode != 13 ){
+        if( e.keyCode != 13 || mainInput.value == ''){
             return;
         }
 
@@ -94,51 +94,65 @@
     .tick {
         float: left;
         text-align: center;
-        border: 1px solid gray;
-        width: 60px;
-        height: 60px;
+        border: 0px;
+        width: 62px;
+        height: 62px;
         background-color: green;
     }
     .body {
-        width: 626px;
+        width: 640px;
         height: 62px;
-        border: 1px solid gray;
-        /*text-align: center;*/
+		border-top: 1px solid gray;
+    }
+	.bodyTop {
+        width: 638px;
+        height: 62px;
+        border: 0px;
     }
     .message {
         float: left;
-        width: 500px;
-        height: 60px;
-        border: 1px solid gray;
+        width: 516px;
+        height: 61px;
+        
         text-align: left;
+		font-size: 30px;
+		color: gray;
+    }
+	.messageTop {
+        float: left;
+        width: 575px;
+        height: 58px;
+        text-align: left;
+		font-size: 30px;
+		border: 0px;
     }
     .delete {
         float: left;
-        width: 60px;
-        height: 60px;
-        border: 1px solid gray;
-        background-color: red;
+        width: 62px;
+        height: 62px;
+        border: 0px solid gray;
+        background-color: red;	
     }
     .emptyLeft {
         float: left;
         text-align: center;
-        border: 1px solid gray;
-        width: 60px;
-        height: 60px;
+        border: 0px;
+        width: 62px;
+        height: 62px;
         background-color: green;
     }
-    .emptyRight {
-        float: left;
-        width: 60px;
-        height: 60px;
-        border: 1px solid gray;
-        background-color: red;
-    }
     #main {
-        width: 626px;
+        width: 640px;
         border: 10px solid gray;
         margin: auto;
     }
+	#mainInput {
+		width: 578px;
+		height: 60px;
+		font-size: 30px;
+		color: gray;
+		border: 0px;
+	}
 </style>
 
 
