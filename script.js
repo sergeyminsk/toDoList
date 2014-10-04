@@ -19,7 +19,6 @@ function createMessage(body) {
 
 var mainDiv = document.getElementById('main');
 
-
 mainDiv.onmousedown = function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
@@ -35,17 +34,18 @@ mainDiv.onmousedown = function(event){
         if(target.style.backgroundColor == 'green' || target.style.backgroundColor == ''){
             target.style.backgroundColor = 'greenyellow';
 
+            target.style.backgroundImage = "url('done.jpg')";
             var strike = document.createElement('strike');
             target.parentNode.getElementsByClassName('text')[0].insertBefore(strike, target.parentNode.getElementsByClassName('text')[0].firstChild);
             strike.appendChild(strike.nextSibling);
 
-            /*
+            /*  or this way ???
              var temp = target.parentNode.getElementsByClassName('text')[0].innerHTML;
              target.parentNode.getElementsByClassName('text')[0].innerHTML = '<strike>' + temp + '</strike>';
              */
         }else{
             target.style.backgroundColor = 'green';
-
+            target.style.backgroundImage = "url('undone.jpg')";
             var temp = target.parentNode.getElementsByTagName('strike')[0].innerHTML;
             target.parentNode.getElementsByClassName('text')[0].innerHTML = temp;
         }

@@ -8,6 +8,7 @@
     width: 62px;
     height: 62px;
     background-color: green;
+    background-image: url("undone.jpg");
 }
 .body {
     width: 640px;
@@ -40,8 +41,8 @@
     float: left;
     width: 62px;
     height: 62px;
-    border: 0px solid gray;
-    background-color: red;
+    border: 0px;
+    background-image: url("deleteSign.jpg");
 }
 .emptyLeft {
     float: left;
@@ -49,7 +50,7 @@
     border: 0px;
     width: 62px;
     height: 62px;
-    background-color: green;
+    background-image: url("selectAll.jpg");
 }
 #main {
     width: 640px;
