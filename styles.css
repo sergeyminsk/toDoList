@@ -1,0 +1,66 @@
+.text {
+    margin: 15px;
+}
+.tick {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 62px;
+    height: 62px;
+    background-color: green;
+}
+.body {
+    width: 640px;
+    height: 62px;
+    border-top: 1px solid gray;
+}
+.bodyTop {
+    width: 638px;
+    height: 62px;
+    border: 0px;
+}
+.message {
+    float: left;
+    width: 516px;
+    height: 61px;
+
+    text-align: left;
+    font-size: 30px;
+    color: gray;
+}
+.messageTop {
+    float: left;
+    width: 575px;
+    height: 58px;
+    text-align: left;
+    font-size: 30px;
+    border: 0px;
+}
+.delete {
+    float: left;
+    width: 62px;
+    height: 62px;
+    border: 0px solid gray;
+    background-color: red;
+}
+.emptyLeft {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 62px;
+    height: 62px;
+    background-color: green;
+}
+#main {
+    width: 640px;
+    border: 15px solid gray;
+    margin: auto;
+    border-radius: 15px;
+}
+#mainInput {
+    width: 578px;
+    height: 60px;
+    font-size: 30px;
+    color: gray;
+    border: 0px;
+}
