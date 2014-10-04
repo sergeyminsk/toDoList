@@ -5,8 +5,9 @@
     float: left;
     text-align: center;
     border: 0px;
-    width: 62px;
+    width: 61px;
     height: 62px;
+    border-right: 1px solid gray;
     background-color: green;
     background-image: url("undone.jpg");
 }
@@ -24,7 +25,6 @@
     float: left;
     width: 516px;
     height: 61px;
-
     text-align: left;
     font-size: 30px;
     color: gray;
@@ -48,9 +48,10 @@
     float: left;
     text-align: center;
     border: 0px;
-    width: 62px;
+    width: 61px;
     height: 62px;
     background-image: url("selectAll.jpg");
+    border-right: 1px solid gray;
 }
 #main {
     width: 640px;
