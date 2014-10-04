@@ -2,6 +2,7 @@
 
 var mainDiv = document.getElementById('main');
 var mainInput = document.getElementById("mainInput");
+var topLeft = document.getElementById('emptyLeft');
 mainInput.focus();
 
 /*generate task with text*/
@@ -20,34 +21,27 @@ function createMessage(body) {
 }
 
 
-
-
 mainDiv.onmousedown = function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
     /*if click red - delete task*/
     if(target.className == 'delete') {
-        target.parentNode.style.display = 'none';
+        removeEl(target.parentNode);
+        checkTasks();
+        if(checkTasks() == 0){
+            topLeft.style.backgroundImage = ''; // if delete all tasks - sign 'select all' is hiding
+        }
     }
 
-
-
-
-
-    if(target.className == 'emptyLeft'){
+    /* selecting or deselecting all tasks like done */
+    if(target.id == 'emptyLeft'){
         target.getAttribute('is') == 'false' || target.getAttribute('is') == ''
             ? selectAll() | target.setAttribute('is', 'true')
             : unselectAll() | target.setAttribute('is', 'false')
-
     }
 
-
-
-
-
-
-    /*if click green - select like done task*/
+    /*if click - select like done task*/
     if(target.className == 'tick') {
 
         if(target.getAttribute('status') == 'false' || target.getAttribute('status') == ''){
@@ -75,6 +69,7 @@ mainDiv.onmousedown = function(event){
 
 function createTask(e){
     e = e || window.event;
+
     /* it adds task, only after pushing Enter*/
     if( e.keyCode != 13 || mainInput.value == ''){
         return;
@@ -83,19 +78,28 @@ function createTask(e){
 
     var messageElem = createMessage(mainInput.value);
 
+    topLeft.style.backgroundImage = "url('selectAll.jpg')"; // to show sign "select all tasks"
     document.getElementById("main").appendChild(messageElem);
+
     mainInput.value = '';
 }
 
+
+function checkTasks(){
+    var allTextsArr = document.getElementsByClassName('text');
+    console.log(allTextsArr.length);
+    return allTextsArr.length;
+}
+
+/* select all tasks */
 function selectAll(){
     var allTicksArr = document.getElementsByClassName('tick');
     var allTextsArr = document.getElementsByClassName('text');
 
     for(var i = 0; i < allTicksArr.length; i++){
-        if(allTicksArr[i].getAttribute('status') == 'true'){
+        if(allTicksArr[i].getAttribute('status') == 'true'){ // skip task, if already select
             continue;
         }
-        console.log(allTicksArr[i].getAttribute('status'));
 
         var strike = document.createElement('strike');
         allTextsArr[i].insertBefore(strike, allTextsArr[i].firstChild);
@@ -106,16 +110,15 @@ function selectAll(){
     }
 
 }
-
+/* unselect all tasks */
 function unselectAll(){
     var allTicksArr = document.getElementsByClassName('tick');
     var allTextsArr = document.getElementsByClassName('text');
 
     for(var i = 0; i < allTicksArr.length; i++){
-        if(allTicksArr[i].getAttribute('status') == 'false'){
+        if(allTicksArr[i].getAttribute('status') == 'false'){ // skip task, if already unselect
             continue;
         }
-
 
         var temp = allTextsArr[i].parentNode.getElementsByTagName('strike')[0].innerHTML;
         allTextsArr[i].parentNode.getElementsByClassName('text')[0].innerHTML = temp;
@@ -123,4 +126,8 @@ function unselectAll(){
         allTicksArr[i].style.backgroundImage = "url('undone.jpg')";
         allTicksArr[i].setAttribute('status', 'false');
     }
+}
+
+function removeEl(elem) {
+    return elem.parentNode ? elem.parentNode.removeChild(elem) : elem;
 }

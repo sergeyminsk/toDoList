@@ -44,13 +44,13 @@
     border: 0px;
     background-image: url("deleteSign.jpg");
 }
-.emptyLeft {
+#emptyLeft {
     float: left;
     text-align: center;
     border: 0px;
     width: 61px;
     height: 62px;
-    background-image: url("selectAll.jpg");
+/*    background-image: url("selectAll.jpg");*/
     border-right: 1px solid gray;
 }
 #main {
