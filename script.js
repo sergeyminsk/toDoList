@@ -3,7 +3,6 @@
 var mainDiv = document.getElementById('main');
 var mainInput = document.getElementById("mainInput");
 var topLeft = document.getElementById('emptyLeft');
-mainInput.focus();
 
 /*generate task with text*/
 function createMessage(body) {
@@ -62,9 +61,7 @@ mainDiv.onmousedown = function(event){
             var temp = target.parentNode.getElementsByTagName('strike')[0].innerHTML;
             target.parentNode.getElementsByClassName('text')[0].innerHTML = temp;
         }
-
     }
-
 }
 
 function createTask(e){
@@ -87,7 +84,6 @@ function createTask(e){
 
 function checkTasks(){
     var allTextsArr = document.getElementsByClassName('text');
-    console.log(allTextsArr.length);
     return allTextsArr.length;
 }
 
