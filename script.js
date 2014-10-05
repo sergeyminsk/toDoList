@@ -35,9 +35,9 @@ mainDiv.onmousedown = function(event){
 
     /* selecting or deselecting all tasks like done */
     if(target.id == 'emptyLeft'){
-        target.getAttribute('is') == 'false' || target.getAttribute('is') == ''
+        target.getAttribute('is') == ''
             ? selectAll() | target.setAttribute('is', 'true')
-            : unselectAll() | target.setAttribute('is', 'false')
+            : unselectAll() | target.setAttribute('is', '')
     }
 
     /*if click - select like done task*/
