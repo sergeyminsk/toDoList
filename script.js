@@ -2,7 +2,7 @@
 
 var mainDiv = document.getElementById('main');
 var mainInput = document.getElementById("mainInput");
-var topLeft = document.getElementById('emptyLeft');
+var topLeft = document.getElementById('topLeft');
 
 /*generate task with text*/
 function createMessage(body) {
@@ -34,7 +34,7 @@ mainDiv.onmousedown = function(event){
     }
 
     /* selecting or deselecting all tasks like done */
-    if(target.id == 'emptyLeft'){
+    if(target.id == 'topLeft'){
         target.getAttribute('is') == ''
             ? selectAll() | target.setAttribute('is', 'true')
             : unselectAll() | target.setAttribute('is', '')

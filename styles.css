@@ -42,9 +42,9 @@
     width: 62px;
     height: 62px;
     border: 0px;
-    background-image: url("img/deleteSign.jpg");
+    background-image: url("img/deleteSignUp.jpg");
 }
-#emptyLeft {
+#topLeft {
     float: left;
     text-align: center;
     border: 0px;
@@ -64,4 +64,8 @@
     font-size: 30px;
     color: gray;
     border: 0px;
+}
+
+.delete:hover {
+    background-image: url("img/deleteSign.jpg");
 }
