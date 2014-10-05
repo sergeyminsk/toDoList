@@ -46,7 +46,7 @@ mainDiv.onmousedown = function(event){
         if(target.getAttribute('status') == 'false' || target.getAttribute('status') == ''){
             target.setAttribute('status', 'true');
 
-            target.style.backgroundImage = "url('done.jpg')";
+            target.style.backgroundImage = "url('img/done.jpg')";
             var strike = document.createElement('strike');
             target.parentNode.getElementsByClassName('text')[0].insertBefore(strike, target.parentNode.getElementsByClassName('text')[0].firstChild);
             strike.appendChild(strike.nextSibling);
@@ -57,7 +57,7 @@ mainDiv.onmousedown = function(event){
              */
         }else{
             target.setAttribute('status', 'false');
-            target.style.backgroundImage = "url('undone.jpg')";
+            target.style.backgroundImage = "url('img/undone.jpg')";
             var temp = target.parentNode.getElementsByTagName('strike')[0].innerHTML;
             target.parentNode.getElementsByClassName('text')[0].innerHTML = temp;
         }
@@ -75,7 +75,7 @@ function createTask(e){
 
     var messageElem = createMessage(mainInput.value);
 
-    topLeft.style.backgroundImage = "url('selectAll.jpg')"; // to show sign "select all tasks"
+    topLeft.style.backgroundImage = "url('img/selectAll.jpg')"; // to show sign "select all tasks"
     document.getElementById("main").appendChild(messageElem);
 
     mainInput.value = '';
@@ -101,7 +101,7 @@ function selectAll(){
         allTextsArr[i].insertBefore(strike, allTextsArr[i].firstChild);
         strike.appendChild(strike.nextSibling);
 
-        allTicksArr[i].style.backgroundImage = "url('done.jpg')";
+        allTicksArr[i].style.backgroundImage = "url('img/done.jpg')";
         allTicksArr[i].setAttribute('status', 'true');
     }
 
@@ -119,7 +119,7 @@ function unselectAll(){
         var temp = allTextsArr[i].parentNode.getElementsByTagName('strike')[0].innerHTML;
         allTextsArr[i].parentNode.getElementsByClassName('text')[0].innerHTML = temp;
 
-        allTicksArr[i].style.backgroundImage = "url('undone.jpg')";
+        allTicksArr[i].style.backgroundImage = "url('img/undone.jpg')";
         allTicksArr[i].setAttribute('status', 'false');
     }
 }

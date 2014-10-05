@@ -9,7 +9,7 @@
     height: 62px;
     border-right: 1px solid gray;
     background-color: green;
-    background-image: url("undone.jpg");
+    background-image: url("img/undone.jpg");
 }
 .body {
     width: 640px;
@@ -42,7 +42,7 @@
     width: 62px;
     height: 62px;
     border: 0px;
-    background-image: url("deleteSign.jpg");
+    background-image: url("img/deleteSign.jpg");
 }
 #emptyLeft {
     float: left;
@@ -50,7 +50,6 @@
     border: 0px;
     width: 61px;
     height: 62px;
-/*    background-image: url("selectAll.jpg");*/
     border-right: 1px solid gray;
 }
 #main {
