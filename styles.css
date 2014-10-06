@@ -42,7 +42,6 @@
     width: 62px;
     height: 62px;
     border: 0px;
-    background-image: url("img/deleteSignUp.jpg");
 }
 #topLeft {
     float: left;
@@ -66,6 +65,78 @@
     border: 0px;
 }
 
-.delete:hover {
+.text {
+    margin: 15px;
+}
+.tick {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    border-right: 1px solid gray;
+    background-color: green;
+    background-image: url("img/undone.jpg");
+}
+.body {
+    width: 640px;
+    height: 62px;
+    border-top: 1px solid gray;
+}
+.bodyTop {
+    width: 638px;
+    height: 62px;
+    border: 0px;
+}
+.message {
+    float: left;
+    width: 516px;
+    height: 61px;
+    text-align: left;
+    font-size: 30px;
+    color: gray;
+}
+.messageTop {
+    float: left;
+    width: 575px;
+    height: 58px;
+    text-align: left;
+    font-size: 30px;
+    border: 0px;
+}
+.delete {
+    float: left;
+    width: 62px;
+    height: 62px;
+    border: 0px;
+}
+#topLeft {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    border-right: 1px solid gray;
+}
+#main {
+    width: 640px;
+    border: 15px solid gray;
+    margin: auto;
+    border-radius: 15px;
+}
+#mainInput {
+    width: 558px;
+    height: 60px;
+    font-size: 30px;
+    color: gray;
+    border: 0px;
+    padding-left: 20px;
+}
+
+div.body:hover .delete:hover{
     background-image: url("img/deleteSign.jpg");
+}
+
+div.body:hover .delete{
+    background-image: url("img/deleteSignUp.jpg");
 }
