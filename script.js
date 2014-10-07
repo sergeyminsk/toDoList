@@ -1,5 +1,5 @@
 /*   */
-var mainDiv = document.getElementById('main');
+var mainDiv = $('#main');//document.getElementById('main');
 var mainInput = document.getElementById("mainInput");
 
 /*generate task with text*/
@@ -18,13 +18,13 @@ function createMessage(body) {
 }
 
 
-mainDiv.onclick = function(event){
+mainDiv.on('click', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
     /*if click red - delete task*/
     if(target.className == 'delete') {
-        removeEl(target.parentNode);
+        removeEl(target.parentNode); // .remove()
 
         if(checkTasks() == 0){
             document.getElementById('topLeftThereTask').id = 'topLeftNoneTask';
@@ -60,7 +60,7 @@ mainDiv.onclick = function(event){
 
         return;
     }
-}
+})
 
 function createTask(e){
     e = e || window.event;
