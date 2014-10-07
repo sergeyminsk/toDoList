@@ -1,8 +1,6 @@
-
-
+/*   */
 var mainDiv = document.getElementById('main');
 var mainInput = document.getElementById("mainInput");
-var topLeft = document.getElementById('topLeft');
 
 /*generate task with text*/
 function createMessage(body) {
@@ -93,20 +91,17 @@ function checkTasks(){
 function selectAll(){
     var allUndoneArr = document.getElementsByClassName('undone');
 
-    for(var i = allUndoneArr.length - 1; i > 0; i--){
-        allUndoneArr[i].className = 'done';
+    for(var i = allUndoneArr.length - 1; i >= 0; i--){ // $('li a').each(function(i, a) { alert( i + ": " + a.href); });
+        allUndoneArr[0].className = 'done';
     }
-    allUndoneArr[0].className = 'done';
-
 }
 /* unselect all tasks */
 function unselectAll(){
     var allUndoneArr = document.getElementsByClassName('done');
 
-    for(var i = allUndoneArr.length - 1; i > 0; i--){
-        allUndoneArr[i].className = 'undone';
+    for(var i = allUndoneArr.length - 1; i >= 0; i--){ //$('li a').each(function(i, a) { alert( i + ": " + a.href); });
+        allUndoneArr[0].className = 'undone';
     }
-    allUndoneArr[0].className = 'undone';
 }
 
 function removeEl(elem) {
