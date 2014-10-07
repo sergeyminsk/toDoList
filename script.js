@@ -9,7 +9,7 @@ function createMessage(body) {
     var container = document.createElement('div');
 
     container.innerHTML = '<div class="body"> \
-        <div class="tick" status="false"></div> \
+        <div class="undone"></div> \
         <div class="message">\
         <div class="text">' + body + '</div>\
         </div> \
@@ -20,47 +20,47 @@ function createMessage(body) {
 }
 
 
-mainDiv.onmousedown = function(event){
+mainDiv.onclick = function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
     /*if click red - delete task*/
     if(target.className == 'delete') {
         removeEl(target.parentNode);
-        checkTasks();
-        if(checkTasks() == 0){
-            topLeft.style.backgroundImage = ''; // if delete all tasks - sign 'select all' is hiding
-        }
-    }
 
-    /* selecting or deselecting all tasks like done */
-    if(target.id == 'topLeft'){
-        target.getAttribute('is') == ''
-            ? selectAll() | target.setAttribute('is', 'true')
-            : unselectAll() | target.setAttribute('is', '')
+        if(checkTasks() == 0){
+            document.getElementById('topLeftThereTask').id = 'topLeftNoneTask';
+        }
+        return;
     }
 
     /*if click - select like done task*/
-    if(target.className == 'tick') {
+    if(target.className == 'undone') {
+        target.className = 'done';
+        return;
+    }
+    if(target.className == 'done'){
+        target.className = 'undone';
+        return;
+    }
 
-        if(target.getAttribute('status') == 'false' || target.getAttribute('status') == ''){
-            target.setAttribute('status', 'true');
 
-            target.style.backgroundImage = "url('img/done.jpg')";
-            var strike = document.createElement('strike');
-            target.parentNode.getElementsByClassName('text')[0].insertBefore(strike, target.parentNode.getElementsByClassName('text')[0].firstChild);
-            strike.appendChild(strike.nextSibling);
+    if(target.id == 'topLeftThereTask'){
+        var undone = document.getElementsByClassName('undone');
+        var done = document.getElementsByClassName('done');
 
-            /*  or this way ???
-             var temp = target.parentNode.getElementsByClassName('text')[0].innerHTML;
-             target.parentNode.getElementsByClassName('text')[0].innerHTML = '<strike>' + temp + '</strike>';
-             */
-        }else{
-            target.setAttribute('status', 'false');
-            target.style.backgroundImage = "url('img/undone.jpg')";
-            var temp = target.parentNode.getElementsByTagName('strike')[0].innerHTML;
-            target.parentNode.getElementsByClassName('text')[0].innerHTML = temp;
+        if((done.length + undone.length) == done.length){
+            unselectAll();
+            return;
         }
+        if(undone.length > 0){
+            selectAll();
+        }
+        if(done.length == 0){
+            selectAll();
+        }
+
+        return;
     }
 }
 
@@ -72,10 +72,12 @@ function createTask(e){
         return;
     }
 
+    if(checkTasks() == 0){
+        document.getElementById('topLeftNoneTask').id = 'topLeftThereTask';
+    }
 
     var messageElem = createMessage(mainInput.value);
 
-    topLeft.style.backgroundImage = "url('img/selectAll.jpg')"; // to show sign "select all tasks"
     document.getElementById("main").appendChild(messageElem);
 
     mainInput.value = '';
@@ -89,39 +91,22 @@ function checkTasks(){
 
 /* select all tasks */
 function selectAll(){
-    var allTicksArr = document.getElementsByClassName('tick');
-    var allTextsArr = document.getElementsByClassName('text');
+    var allUndoneArr = document.getElementsByClassName('undone');
 
-    for(var i = 0; i < allTicksArr.length; i++){
-        if(allTicksArr[i].getAttribute('status') == 'true'){ // skip task, if already select
-            continue;
-        }
-
-        var strike = document.createElement('strike');
-        allTextsArr[i].insertBefore(strike, allTextsArr[i].firstChild);
-        strike.appendChild(strike.nextSibling);
-
-        allTicksArr[i].style.backgroundImage = "url('img/done.jpg')";
-        allTicksArr[i].setAttribute('status', 'true');
+    for(var i = allUndoneArr.length - 1; i > 0; i--){
+        allUndoneArr[i].className = 'done';
     }
+    allUndoneArr[0].className = 'done';
 
 }
 /* unselect all tasks */
 function unselectAll(){
-    var allTicksArr = document.getElementsByClassName('tick');
-    var allTextsArr = document.getElementsByClassName('text');
+    var allUndoneArr = document.getElementsByClassName('done');
 
-    for(var i = 0; i < allTicksArr.length; i++){
-        if(allTicksArr[i].getAttribute('status') == 'false'){ // skip task, if already unselect
-            continue;
-        }
-
-        var temp = allTextsArr[i].parentNode.getElementsByTagName('strike')[0].innerHTML;
-        allTextsArr[i].parentNode.getElementsByClassName('text')[0].innerHTML = temp;
-
-        allTicksArr[i].style.backgroundImage = "url('img/undone.jpg')";
-        allTicksArr[i].setAttribute('status', 'false');
+    for(var i = allUndoneArr.length - 1; i > 0; i--){
+        allUndoneArr[i].className = 'undone';
     }
+    allUndoneArr[0].className = 'undone';
 }
 
 function removeEl(elem) {

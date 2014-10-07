@@ -75,7 +75,6 @@
     width: 61px;
     height: 62px;
     border-right: 1px solid gray;
-    background-color: green;
     background-image: url("img/undone.jpg");
 }
 .body {
@@ -110,7 +109,7 @@
     height: 62px;
     border: 0px;
 }
-#topLeft {
+#topLeftNoneTask {
     float: left;
     text-align: center;
     border: 0px;
@@ -118,6 +117,17 @@
     height: 62px;
     border-right: 1px solid gray;
 }
+
+#topLeftThereTask {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    border-right: 1px solid gray;
+    background-image: url('img/selectAll.jpg');
+}
+
 #main {
     width: 640px;
     border: 15px solid gray;
@@ -139,4 +149,27 @@ div.body:hover .delete:hover{
 
 div.body:hover .delete{
     background-image: url("img/deleteSignUp.jpg");
+}
+
+.done {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    border-right: 1px solid gray;
+    background-image: url("img/done.jpg");
+}
+
+.undone {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    border-right: 1px solid gray;
+    background-image: url("img/undone.jpg");
+}
+div.done + div.message div.text {
+    text-decoration: line-through;
 }
