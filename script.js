@@ -1,6 +1,6 @@
 /*   */
 var mainDiv = $('#main');//document.getElementById('main');
-var mainInput = document.getElementById("mainInput");
+var mainInput = $('#mainInput');
 
 /*generate task with text*/
 function createMessage(body) {
@@ -66,7 +66,7 @@ function createTask(e){
     e = e || window.event;
 
     /* it adds task, only after pushing Enter*/
-    if( e.keyCode != 13 || mainInput.value == ''){
+    if( e.keyCode != 13 || mainInput.val() == ''){
         return;
     }
 
@@ -74,11 +74,11 @@ function createTask(e){
         document.getElementById('topLeftNoneTask').id = 'topLeftThereTask';
     }
 
-    var messageElem = createMessage(mainInput.value);
+    var messageElem = createMessage(mainInput.val());
 
     document.getElementById("main").appendChild(messageElem);
 
-    mainInput.value = '';
+    mainInput.val('');
 }
 
 
