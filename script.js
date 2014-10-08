@@ -1,5 +1,4 @@
 /*   */
-var mainDiv = $('#main');//document.getElementById('main');
 var mainInput = $('#mainInput');
 
 /*generate task with text*/
@@ -18,43 +17,43 @@ function createMessage(body) {
 }
 
 
-mainDiv.on('click', function(event){
+$('#main').on('click', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
     /*if click red - delete task*/
-    if(target.className == 'delete') {
-        removeEl(target.parentNode); // .remove()
+    if($(target).attr('class') == 'delete') {
+        $(target).parent().remove();
 
         if(checkTasks() == 0){
-            document.getElementById('topLeftThereTask').id = 'topLeftNoneTask';
+            $('#topLeftThereTask').attr('id', 'topLeftNoneTask');
         }
         return;
     }
 
     /*if click - select like done task*/
-    if(target.className == 'undone') {
-        target.className = 'done';
+    if($(target).attr('class') == 'undone') {
+        $(target).attr('class', 'done');
         return;
     }
-    if(target.className == 'done'){
-        target.className = 'undone';
+    if($(target).attr('class') == 'done'){
+        $(target).attr('class', 'undone');
         return;
     }
 
 
-    if(target.id == 'topLeftThereTask'){
-        var undone = document.getElementsByClassName('undone');
-        var done = document.getElementsByClassName('done');
+    if($(target).attr('id') == 'topLeftThereTask'){
+        var undone = $('.undone');
+        var done = $('.done');
 
-        if((done.length + undone.length) == done.length){
+        if((done.size() + undone.size()) == done.size()){
             unselectAll();
             return;
         }
-        if(undone.length > 0){
+        if(undone.size() > 0){
             selectAll();
         }
-        if(done.length == 0){
+        if(done.size() == 0){
             selectAll();
         }
 
@@ -71,39 +70,31 @@ function createTask(e){
     }
 
     if(checkTasks() == 0){
-        document.getElementById('topLeftNoneTask').id = 'topLeftThereTask';
+        $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
     }
 
     var messageElem = createMessage(mainInput.val());
 
-    document.getElementById("main").appendChild(messageElem);
+    $('#main').append(messageElem);
 
     mainInput.val('');
 }
 
 
 function checkTasks(){
-    var allTextsArr = document.getElementsByClassName('text');
-    return allTextsArr.length;
+    return $('.text').size();
 }
 
 /* select all tasks */
 function selectAll(){
-    var allUndoneArr = document.getElementsByClassName('undone');
-
-    for(var i = allUndoneArr.length - 1; i >= 0; i--){ // $('li a').each(function(i, a) { alert( i + ": " + a.href); });
-        allUndoneArr[0].className = 'done';
-    }
+    $('.undone').each(function(i, a){
+        a.className = 'done';
+    });
 }
 /* unselect all tasks */
 function unselectAll(){
-    var allUndoneArr = document.getElementsByClassName('done');
-
-    for(var i = allUndoneArr.length - 1; i >= 0; i--){ //$('li a').each(function(i, a) { alert( i + ": " + a.href); });
-        allUndoneArr[0].className = 'undone';
-    }
+    $('.done').each(function(i, a){
+        a.className = 'undone';
+    });
 }
 
-function removeEl(elem) {
-    return elem.parentNode ? elem.parentNode.removeChild(elem) : elem;
-}
