@@ -3,17 +3,13 @@ var mainInput = $('#mainInput');
 
 /*generate task with text*/
 function createMessage(body) {
-    var container = document.createElement('div');
-
-    container.innerHTML = '<div class="body"> \
+    return $('<div>').html('<div class="body"> \
         <div class="undone"></div> \
         <div class="message">\
         <div class="text">' + body + '</div>\
         </div> \
         <div class="delete"></div> \
-  </div>';
-
-    return container.firstChild;
+  </div>');
 }
 
 
