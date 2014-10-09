@@ -3,13 +3,11 @@ var mainInput = $('#mainInput');
 
 /*generate task with text*/
 function createMessage(body) {
-    return $('<div>').html('<div class="body"> \
-        <div class="undone"></div> \
+    return $('<div>').attr('class', 'body').html('<div class="undone"></div> \
         <div class="message">\
         <div class="text">' + body + '</div>\
         </div> \
-        <div class="delete"></div> \
-  </div>');
+        <div class="delete"></div>');
 }
 
 
@@ -48,9 +46,11 @@ $('#main').on('click', function(event){
         }
         if(undone.size() > 0){
             selectAll();
+            return;
         }
         if(done.size() == 0){
             selectAll();
+            return;
         }
 
         return;
