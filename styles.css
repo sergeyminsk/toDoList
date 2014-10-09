@@ -12,20 +12,6 @@
     font-size: 30px;
     border: 0px;
 }
-.delete {
-    float: left;
-    width: 62px;
-    height: 62px;
-    border: 0px;
-}
-#topLeft {
-    float: left;
-    text-align: center;
-    border: 0px;
-    width: 61px;
-    height: 62px;
-    border-right: 1px solid gray;
-}
 
 .text {
     margin: 15px;
@@ -52,8 +38,10 @@
     height: 62px;
     border: 0px;
 }
+
 #topLeftNoneTask {
     float: left;
+    display: inline;
     text-align: center;
     border: 0px;
     width: 61px;
@@ -77,6 +65,7 @@
     margin: auto;
     border-radius: 15px;
 }
+
 #mainInput {
     width: 558px;
     height: 60px;
@@ -113,6 +102,7 @@ div.body:hover .delete{
     border-right: 1px solid gray;
     background-image: url("img/undone.jpg");
 }
+
 div.done + div.message div.text {
     text-decoration: line-through;
 }
