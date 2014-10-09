@@ -1,63 +1,73 @@
 /*   */
 var mainInput = $('#mainInput');
+var mainWindow = $('#main');
 
 /*generate task with text*/
 function createMessage(body) {
-    return $('<div>').attr('class', 'body').html('<div class="undone"></div> \
-        <div class="message">\
-        <div class="text">' + body + '</div>\
-        </div> \
-        <div class="delete"></div>');
+    return $('<div>')
+        .attr('class', 'body')
+        .html('<div class="undone"></div> \
+               <div class="message"> \
+               <div class="text">' + body + '</div> \
+               </div> \
+               <div class="delete"></div>');
 }
 
-
-$('#main').on('click', function(event){
+mainWindow.on('click', '.done', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
-    /*if click red - delete task*/
-    if($(target).attr('class') == 'delete') {
-        $(target).parent().remove();
+        $(target).attr('class', 'undone');console.log('1');
+        return;
+});
 
-        if(checkTasks() == 0){
-            $('#topLeftThereTask').attr('id', 'topLeftNoneTask');
-        }
+/*if click - select like done task*/
+mainWindow.on('click', '.undone', function(event){
+    event = event || window.event;
+    var target = event.target || event.srcElement;
+
+        $(target).attr('class', 'done');console.log('2');
+        return;
+});
+
+/* select/unselect all tasks */
+mainWindow.on('click', '#topLeftThereTask', function(event){
+    event = event || window.event;
+    var target = event.target || event.srcElement;
+
+    var undone = $('.undone');
+    var done = $('.done');
+
+    if((done.size() + undone.size()) == done.size()){
+        unselectAll();
         return;
     }
-
-    /*if click - select like done task*/
-    if($(target).attr('class') == 'undone') {
-        $(target).attr('class', 'done');
+    if(undone.size() > 0){
+        selectAll();
         return;
     }
-    if($(target).attr('class') == 'done'){
-        $(target).attr('class', 'undone');
+    if(done.size() == 0){
+        selectAll();
         return;
     }
+    return;
+});
 
+/*if click red - delete task*/
+mainWindow.on('click', 'div.delete', function(event){
+    event = event || window.event;
+    var target = event.target || event.srcElement;
 
-    if($(target).attr('id') == 'topLeftThereTask'){
-        var undone = $('.undone');
-        var done = $('.done');
+    $(target).parent().remove();
 
-        if((done.size() + undone.size()) == done.size()){
-            unselectAll();
-            return;
-        }
-        if(undone.size() > 0){
-            selectAll();
-            return;
-        }
-        if(done.size() == 0){
-            selectAll();
-            return;
-        }
-
-        return;
+    if(checkTasks() == 0){
+        $('#topLeftThereTask').attr('id', 'topLeftNoneTask');
     }
+    return;
 })
 
-function createTask(e){
+/* adds the task */
+mainInput.on('keydown', function(e){
     e = e || window.event;
 
     /* it adds task, only after pushing Enter*/
@@ -74,8 +84,7 @@ function createTask(e){
     $('#main').append(messageElem);
 
     mainInput.val('');
-}
-
+});
 
 function checkTasks(){
     return $('.text').size();
