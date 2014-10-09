@@ -13,12 +13,13 @@ function createMessage(body) {
                <div class="delete"></div>');
 }
 
+/*if click - select like undone task*/
 mainWindow.on('click', '.done', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
-        $(target).attr('class', 'undone');console.log('1');
-        return;
+    $(target).attr('class', 'undone');
+    return;
 });
 
 /*if click - select like done task*/
@@ -26,8 +27,8 @@ mainWindow.on('click', '.undone', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
-        $(target).attr('class', 'done');console.log('2');
-        return;
+    $(target).attr('class', 'done');
+    return;
 });
 
 /* select/unselect all tasks */
