@@ -24,9 +24,13 @@
     border-right: 1px solid gray;
     background-image: url('img/selectAll.jpg');
 }
+#messageTop {
+    width: 100%;
+    height: 100%;
+}
 
 #mainInput {
-    width: 558px;
+    width: 556px;
     height: 60px;
     font-size: 30px;
     color: gray;
@@ -35,7 +39,7 @@
 }
 
 .body {
-    width: 640px;
+    width: 100%;
     border-top: 1px solid gray;
 }
 
@@ -72,7 +76,7 @@
 
 .delete {
     float: right;
-    display: inline-block;
+    display: inline;
     width: 62px;
     height: 62px;
     border: 0px;
@@ -85,8 +89,6 @@ div.body:hover .delete:hover{
 div.body:hover .delete{
     background-image: url("img/deleteSignUp.jpg");
 }
-
-
 
 div.done + div.message div.text {
     text-decoration: line-through;
