@@ -4,12 +4,11 @@ var mainWindow = $('#main');
 
 /*generate task with text*/
 function createMessage(text) {
-    var finishedText = splitString(text);
     return $('<div>')
         .attr('class', 'body')
         .html('<div class="undone"></div> \
                <div class="message"> \
-               <div class="text">' + finishedText + '</div> \
+               <div class="text">' + text + '</div> \
                </div> \
                <div class="delete"></div>');
 }
@@ -103,18 +102,4 @@ function unselectAll(){
     $('.done').each(function(i, a){
         a.className = 'undone';
     });
-}
-
-function splitString(str){
-    if(str.length < 24){
-        return str;
-    }
-    var strResult = '';
-    for(var i = 0; i < str.length; i++){
-        if(i%24 == 0 && i != 0){
-            strResult += '<br>';
-        }
-        strResult += str.charAt(i);
-    }
-    return strResult;
 }
