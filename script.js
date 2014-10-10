@@ -103,3 +103,22 @@ function unselectAll(){
         a.className = 'undone';
     });
 }
+/* emulator of input */
+(function(count){
+    if(count == 'false'){return;}
+    var e = jQuery.Event("keydown", { keyCode: 13 });
+
+    for(var i = 0; i < count; i++){
+        if(i%3 == 0){
+            mainInput.val(new Date()%10000000000000000);
+            mainInput.trigger(e);
+            continue;
+        }
+        mainInput.val(new Date());
+        mainInput.trigger(e);
+    }
+    var undone = $('.undone');
+    undone.eq(new Date()%count).click();
+    undone.eq(new Date()%count).click();
+})(10);
+
