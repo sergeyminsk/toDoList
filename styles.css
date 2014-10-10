@@ -1,42 +1,8 @@
-.bodyTop {
-    width: 638px;
-    height: 62px;
-    border: 0px;
-}
-
-.messageTop {
-    float: left;
-    width: 575px;
-    height: 58px;
-    text-align: left;
-    font-size: 30px;
-    border: 0px;
-}
-
-.text {
-    margin: 15px;
-}
-
-.body {
+#main {
     width: 640px;
-    height: 62px;
-    border-top: 1px solid gray;
-}
-
-.message {
-    float: left;
-    width: 516px;
-    height: 61px;
-    text-align: left;
-    font-size: 30px;
-    color: gray;
-}
-
-.delete {
-    float: left;
-    width: 62px;
-    height: 62px;
-    border: 0px;
+    border: 15px solid gray;
+    margin: auto;
+    border-radius: 15px;
 }
 
 #topLeftNoneTask {
@@ -59,13 +25,6 @@
     background-image: url('img/selectAll.jpg');
 }
 
-#main {
-    width: 640px;
-    border: 15px solid gray;
-    margin: auto;
-    border-radius: 15px;
-}
-
 #mainInput {
     width: 558px;
     height: 60px;
@@ -73,6 +32,50 @@
     color: gray;
     border: 0px;
     padding-left: 20px;
+}
+
+.body {
+    width: 640px;
+    border-top: 1px solid gray;
+}
+
+.done {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    background-image: url("img/done.jpg");
+}
+
+.undone {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
+    background-image: url("img/undone.jpg");
+}
+
+.message {
+    display: inline-block;
+    width: 516px;
+    text-align: left;
+    font-size: 30px;
+    color: gray;
+    border-left: 1px solid gray;
+}
+
+.text {
+    margin: 15px;
+}
+
+.delete {
+    float: right;
+    display: inline-block;
+    width: 62px;
+    height: 62px;
+    border: 0px;
 }
 
 div.body:hover .delete:hover{
@@ -83,25 +86,7 @@ div.body:hover .delete{
     background-image: url("img/deleteSignUp.jpg");
 }
 
-.done {
-    float: left;
-    text-align: center;
-    border: 0px;
-    width: 61px;
-    height: 62px;
-    border-right: 1px solid gray;
-    background-image: url("img/done.jpg");
-}
 
-.undone {
-    float: left;
-    text-align: center;
-    border: 0px;
-    width: 61px;
-    height: 62px;
-    border-right: 1px solid gray;
-    background-image: url("img/undone.jpg");
-}
 
 div.done + div.message div.text {
     text-decoration: line-through;
