@@ -5,7 +5,7 @@ var mainWindow = $('#main');
 /*generate task with text*/
 function createMessage(text) {
     return $('<div>')
-        .attr('class', 'body')
+        .attr('class', 'bodyOfTask')
         .html('<div class="undone"></div> \
                <div class="message"> \
                <div class="text">' + text + '</div> \
@@ -77,39 +77,57 @@ mainWindow.on('dblclick', '.message', function(){
     }
 
     var self = $(this);
-
+    var oldString = self.find('.text').html();
+    var tempInput = $('#tempInput');
     var input = $('<input>').attr('id', 'tempInput')
                             .attr('type', 'text')
-                            .val( self.find('.text').html() );
-
+                            .val( oldString );
     var div = $('<div>').attr('id', 'tempDiv')
                         .html(input);
 
+    /* insert temp block with input in task for editing */
     self.before(div);
+    /* to hide Delete button*/
     self.parent().find('.delete').hide();
-
+    /* change to temp attributes */
     self.parent().find('.done').attr('class', '').attr('id', 'tempDoneUndone');
+    /* to hide message block*/
     self.hide();
 
-
+    /* if click to other elements */
     $('#tempInput').on('blur', function(){
         backToFirstState();
         return;
     });
 
+    /* if press Enter */
     $('#tempInput').on('keydown', function(e){
         e = e || window.event;
+
         if( e.keyCode != 13){
             return;
         }
+
         backToFirstState();
         return;
     });
 
     function backToFirstState(){
+        var textResult;
+
+        /* if empty string - set old value back */
+        if(input.val() == ''){
+            textResult = oldString;
+        }else{
+            textResult = input.val();
+        }
+        /* to show Delete button*/
         self.parent().find('.delete').show();
+        /* to change temp attributes back*/
         self.parent().find('#tempDoneUndone').attr('class', 'undone').attr('id', '');
-        self.show().find('.text').eq(0).html(input.val());
+        /* insert edited text to task */
+        self.show().find('.text').eq(0).html(textResult);
+        /* remove temp block */
         self.parent().find('#tempDiv').remove();
     }
 });

@@ -38,7 +38,7 @@
     padding-left: 20px;
 }
 
-.body {
+.bodyOfTask {
     width: 100%;
     border-top: 1px solid gray;
 }
@@ -108,11 +108,11 @@
     width: 61px;
     height: 62px;
 }
-div.body:hover .delete:hover{
+div.bodyOfTask:hover .delete:hover{
     background-image: url("img/deleteSign.jpg");
 }
 
-div.body:hover .delete{
+div.bodyOfTask:hover .delete{
     background-image: url("img/deleteSignUp.jpg");
 }
 
