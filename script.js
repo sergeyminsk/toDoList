@@ -69,17 +69,49 @@ mainWindow.on('click', '.delete', function(event){
     return;
 })
 
+/* edit task */
 mainWindow.on('dblclick', '.message', function(){
-    var input = $('<input>').attr('id', 'extraInput')
+    /* cannot be more then one edit-input */
+    if($('#tempInput').size() > 0){
+        return;
+    }
+
+    var self = $(this);
+
+    var input = $('<input>').attr('id', 'tempInput')
                             .attr('type', 'text')
-                            .val($(this).find('.text').html());
+                            .val( self.find('.text').html() );
+
     var div = $('<div>').attr('id', 'tempDiv')
                         .html(input);
 
-    $(this).before(div);
-    $(this).parent().find('.delete').hide();
-    $(this).hide();
+    self.before(div);
+    self.parent().find('.delete').hide();
 
+    self.parent().find('.done').attr('class', '').attr('id', 'tempDoneUndone');
+    self.hide();
+
+
+    $('#tempInput').on('blur', function(){
+        backToFirstState();
+        return;
+    });
+
+    $('#tempInput').on('keydown', function(e){
+        e = e || window.event;
+        if( e.keyCode != 13){
+            return;
+        }
+        backToFirstState();
+        return;
+    });
+
+    function backToFirstState(){
+        self.parent().find('.delete').show();
+        self.parent().find('#tempDoneUndone').attr('class', 'undone').attr('id', '');
+        self.show().find('.text').eq(0).html(input.val());
+        self.parent().find('#tempDiv').remove();
+    }
 });
 
 /* adds the task */

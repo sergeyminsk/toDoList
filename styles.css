@@ -91,7 +91,7 @@
     border-left: 1px solid gray;
     z-index: 10;
 }
-#extraInput {
+#tempInput {
     display: inline-block;
     width: 558px;
     height: 60px;
@@ -100,6 +100,13 @@
     color: gray;
     border: 0px;
     padding-left: 20px;
+}
+#tempDoneUndone {
+    float: left;
+    text-align: center;
+    border: 0px;
+    width: 61px;
+    height: 62px;
 }
 div.body:hover .delete:hover{
     background-image: url("img/deleteSign.jpg");
