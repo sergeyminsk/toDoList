@@ -87,6 +87,8 @@ mainWindow.on('dblclick', '.message', function(){
 
     /* insert temp block with input in task for editing */
     self.before(div);
+    /* focus on temp input */
+    input.focus();
     /* to hide Delete button*/
     self.parent().find('.delete').hide();
     /* change to temp attributes */
