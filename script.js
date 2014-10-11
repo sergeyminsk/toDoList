@@ -22,6 +22,8 @@ mainWindow.on('click', '.done', function(event){
     return;
 });
 
+mainWindow.on('selectstart', function(){return false;});
+
 /*if click - select like done task*/
 mainWindow.on('click', '.undone', function(event){
     event = event || window.event;
@@ -55,7 +57,7 @@ mainWindow.on('click', '#topLeftThereTask', function(event){
 });
 
 /*if click red - delete task*/
-mainWindow.on('click', 'div.delete', function(event){
+mainWindow.on('click', '.delete', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
@@ -66,6 +68,19 @@ mainWindow.on('click', 'div.delete', function(event){
     }
     return;
 })
+
+mainWindow.on('dblclick', '.message', function(){
+    var input = $('<input>').attr('id', 'extraInput')
+                            .attr('type', 'text')
+                            .val($(this).find('.text').html());
+    var div = $('<div>').attr('id', 'tempDiv')
+                        .html(input);
+
+    $(this).before(div);
+    $(this).parent().find('.delete').hide();
+    $(this).hide();
+
+});
 
 /* adds the task */
 mainInput.on('keydown', function(e){
@@ -105,7 +120,7 @@ function unselectAll(){
 }
 /* emulator of input */
 (function(count){
-    if(count == 'false'){return;}
+    if(count == 0){return;}
     var e = jQuery.Event("keydown", { keyCode: 13 });
 
     for(var i = 0; i < count; i++){
@@ -120,5 +135,5 @@ function unselectAll(){
     var undone = $('.undone');
     undone.eq(new Date()%count).click();
     undone.eq(new Date()%count).click();
-})(10);
+})(3);
 

@@ -82,7 +82,25 @@
     height: 62px;
     border: 0px;
 }
-
+#tempDiv {
+    display: inline-block;
+    width: 578px;
+    text-align: left;
+    font-size: 30px;
+    color: gray;
+    border-left: 1px solid gray;
+    z-index: 10;
+}
+#extraInput {
+    display: inline-block;
+    width: 558px;
+    height: 60px;
+    text-align: left;
+    font-size: 30px;
+    color: gray;
+    border: 0px;
+    padding-left: 20px;
+}
 div.body:hover .delete:hover{
     background-image: url("img/deleteSign.jpg");
 }
