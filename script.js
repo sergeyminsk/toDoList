@@ -240,9 +240,32 @@ function CookieObj(){
 
 if(document.cookie){
     console.log('there is cookie !!!');
+    buildFromCookie();
 }
-//cookieObj.remove(3)
-/*
-$.cookie('v0', null, { expires: 0});
-$.cookie('s0', null, { expires: 0});
-*/
+
+
+function buildFromCookie(){
+
+    for(var i = 0; i < 20; i++){
+        if(getCookie('v' + i)){
+                var text = '' + getCookie('v' + i);
+                var messageElem = createMessage(text);
+                indexNumber++;
+                $('#main').append(messageElem);
+
+        }
+    }
+
+    $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+    }
+    return "";
+}
