@@ -1,11 +1,14 @@
 /*   */
 var mainInput = $('#mainInput');
 var mainWindow = $('#main');
+var cookieObj = new CookieObj();
+var indexNumber = 1;
 
 /*generate task with text*/
 function createMessage(text) {
     return $('<div>')
         .attr('class', 'bodyOfTask')
+        .attr('indexNumber', indexNumber)
         .html('<div class="undone"></div> \
                <div class="message"> \
                <div class="text">' + text + '</div> \
@@ -18,6 +21,9 @@ mainWindow.on('click', '.done', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
+    var clickedIndex = $(target).parent().attr('indexNumber');
+    cookieObj.changeS(clickedIndex, 'undone');
+
     $(target).attr('class', 'undone');
     return;
 });
@@ -28,6 +34,9 @@ mainWindow.on('selectstart', function(){return false;});
 mainWindow.on('click', '.undone', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
+
+    var clickedIndex = $(target).parent().attr('indexNumber');
+    cookieObj.changeS(clickedIndex, 'done');
 
     $(target).attr('class', 'done');
     return;
@@ -61,6 +70,8 @@ mainWindow.on('click', '.delete', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
+    cookieObj.remove($(target).parent().attr('indexNumber'));
+
     $(target).parent().remove();
 
     if(checkTasks() == 0){
@@ -93,6 +104,7 @@ mainWindow.on('dblclick', '.message', function(){
     self.parent().find('.delete').hide();
     /* change to temp attributes */
     self.parent().find('.done').attr('class', '').attr('id', 'tempDoneUndone');
+    self.parent().find('.undone').attr('class', '').attr('id', 'tempDoneUndone');
     /* to hide message block*/
     self.hide();
 
@@ -129,6 +141,9 @@ mainWindow.on('dblclick', '.message', function(){
         self.parent().find('#tempDoneUndone').attr('class', 'undone').attr('id', '');
         /* insert edited text to task */
         self.show().find('.text').eq(0).html(textResult);
+        /* write changes to cookie */
+        var ind = self.parent().attr('indexNumber');
+        cookieObj.changeV(ind, textResult);
         /* remove temp block */
         self.parent().find('#tempDiv').remove();
     }
@@ -147,7 +162,10 @@ mainInput.on('keydown', function(e){
         $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
     }
 
+    cookieObj.add(indexNumber, mainInput.val(), 'undone');
+
     var messageElem = createMessage(mainInput.val());
+    indexNumber++;
 
     $('#main').append(messageElem);
 
@@ -161,15 +179,46 @@ function checkTasks(){
 /* select all tasks */
 function selectAll(){
     $('.undone').each(function(i, a){
-        a.className = 'done';
+        a.setAttribute('class', 'done');
+    });
+    $('.bodyOfTask').each(function(i, a){
+        var index = a.getAttribute('indexNumber');
+        cookieObj.changeS(index, 'done');
     });
 }
 /* unselect all tasks */
 function unselectAll(){
     $('.done').each(function(i, a){
-        a.className = 'undone';
+        a.setAttribute('class', 'undone');
+    });
+    $('.bodyOfTask').each(function(i, a){
+        var index = a.getAttribute('indexNumber');
+        cookieObj.changeS(index, 'undone');
     });
 }
+
+/* adds/change/remove from cookie */
+function CookieObj(){
+    var count = 1;
+    return {
+        add: function(index, value, status){
+            $.cookie("v" + +index, value, { expires: 5});
+            $.cookie("s" + +index, status, { expires: 5});
+            count++;
+        },
+        changeV: function(index, value){
+            $.cookie("v" + index, value, { expires: 5});
+        },
+        changeS: function(index, status){
+            $.cookie("s" + index, status, { expires: 5});
+        },
+        remove: function(index){
+            $.cookie('v' + +index, null, { expires: 0});
+            $.cookie('s' + +index, null, { expires: 0});
+        }
+    }
+}
+
 /* emulator of input */
 (function(count){
     if(count == 0){return;}
@@ -187,5 +236,13 @@ function unselectAll(){
     var undone = $('.undone');
     undone.eq(new Date()%count).click();
     undone.eq(new Date()%count).click();
-})(3);
+})(0);
 
+if(document.cookie){
+    console.log('there is cookie !!!');
+}
+//cookieObj.remove(3)
+/*
+$.cookie('v0', null, { expires: 0});
+$.cookie('s0', null, { expires: 0});
+*/
