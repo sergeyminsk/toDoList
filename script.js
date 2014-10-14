@@ -248,11 +248,12 @@ function buildFromCookie(){
 
     for(var i = 0; i < 20; i++){
         if(getCookie('v' + i)){
-                var text = '' + getCookie('v' + i);
-                var messageElem = createMessage(text);
-                indexNumber++;
-                $('#main').append(messageElem);
-
+            var sts = getCookie('s' + i)
+            var text = '' + getCookie('v' + i);
+            var messageElem = createMessage(text);
+            messageElem.find('.undone').attr('class', sts);
+            indexNumber++;
+            $('#main').append(messageElem);
         }
     }
 
