@@ -2,7 +2,9 @@
 var mainInput = $('#mainInput');
 var mainWindow = $('#main');
 var cookieObj = new CookieObj();
+var cookie = new Cookie();
 var indexNumber = 1;
+
 
 /*generate task with text*/
 function createMessage(text) {
@@ -22,7 +24,8 @@ mainWindow.on('click', '.done', function(event){
     var target = event.target || event.srcElement;
 
     var clickedIndex = $(target).parent().attr('indexNumber');
-    cookieObj.changeS(clickedIndex, 'undone');
+//    cookieObj.changeS(clickedIndex, 'undone');
+    cookie.changeStatus(clickedIndex, 'undone');
 
     $(target).attr('class', 'undone');
     return;
@@ -36,7 +39,8 @@ mainWindow.on('click', '.undone', function(event){
     var target = event.target || event.srcElement;
 
     var clickedIndex = $(target).parent().attr('indexNumber');
-    cookieObj.changeS(clickedIndex, 'done');
+//    cookieObj.changeS(clickedIndex, 'done');
+    cookie.changeStatus(clickedIndex, 'done');
 
     $(target).attr('class', 'done');
     return;
@@ -70,7 +74,8 @@ mainWindow.on('click', '.delete', function(event){
     event = event || window.event;
     var target = event.target || event.srcElement;
 
-    cookieObj.remove($(target).parent().attr('indexNumber'));
+//    cookieObj.remove($(target).parent().attr('indexNumber'));
+    cookie.remove($(target).parent().attr('indexNumber'));
 
     $(target).parent().remove();
 
@@ -143,7 +148,8 @@ mainWindow.on('dblclick', '.message', function(){
         self.show().find('.text').eq(0).html(textResult);
         /* write changes to cookie */
         var ind = self.parent().attr('indexNumber');
-        cookieObj.changeV(ind, textResult);
+//        cookieObj.changeV(ind, textResult);
+        cookie.changeValue(ind, textResult);
         /* remove temp block */
         self.parent().find('#tempDiv').remove();
     }
@@ -162,7 +168,8 @@ mainInput.on('keydown', function(e){
         $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
     }
 
-    cookieObj.add(indexNumber, mainInput.val(), 'undone');
+//    cookieObj.add(indexNumber, mainInput.val(), 'undone');
+    cookie.add(indexNumber, 'undone', mainInput.val());
 
     var messageElem = createMessage(mainInput.val());
     indexNumber++;
@@ -183,7 +190,7 @@ function selectAll(){
     });
     $('.bodyOfTask').each(function(i, a){
         var index = a.getAttribute('indexNumber');
-        cookieObj.changeS(index, 'done');
+//        cookieObj.changeS(index, 'done');
     });
 }
 /* unselect all tasks */
@@ -193,11 +200,91 @@ function unselectAll(){
     });
     $('.bodyOfTask').each(function(i, a){
         var index = a.getAttribute('indexNumber');
-        cookieObj.changeS(index, 'undone');
+//        cookieObj.changeS(index, 'undone');
     });
 }
 
 /* adds/change/remove from cookie */
+function Cookie(){
+    var count = 0;
+    console.log('start');
+
+    if(document.cookie){
+        console.log('there is cookie !!!');
+
+        while(true){
+            if(document.cookie.search('O' + (count + 1)) == -1){
+                break;
+            }
+            count++;
+        }
+
+        buildFromCookie();
+
+    }
+
+    function buildFromCookie(){
+        for(var i = 1; i <= count; i++){
+            var sts = getStatus(i);
+            var text = '' + getValue(i);
+            var messageElem = createMessage(text);
+            messageElem.find('.undone').attr('class', sts);
+            indexNumber++;
+            $('#main').append(messageElem);
+        }
+
+        $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
+    }
+    function getStatus(index){
+        var fromCookie = $.cookie('O' + index);
+        return JSON.parse(fromCookie).s;
+    }
+    function getValue(index){
+        var fromCookie = $.cookie('O' + index);
+        return JSON.parse(fromCookie).v;
+    }
+    function rename(index){
+        var i = new Number(index);
+        for(; i <= count; i++){
+            $.cookie('O' + i, $.cookie('O' + (i+1)), { expires: 5});
+        }
+        $.cookie('O' + count, null, { expires: 0});
+        count--;
+    }
+
+    return {
+        add: function(index, status, value){
+            count++;
+            var valInObj = {s: status, v: value};
+            $.cookie('O' + index, JSON.stringify(valInObj), { expires: 5});
+
+        },
+        changeStatus: function(index, status){
+            var fromCookie = $.cookie('O' + index);
+            var obj = JSON.parse(fromCookie);
+            obj.s = status;
+            $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
+        },
+        changeValue: function(index, value){
+            var fromCookie = $.cookie('O' + index);
+            var obj = JSON.parse(fromCookie);
+            obj.v = value;
+            $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
+        },
+        getStatus: function(index){
+            getStatus(index);
+        },
+        getValue: function(index){
+            getValue(index);
+        },
+        remove: function(index){
+            rename(index)
+        },
+        count: function(){
+            return count;
+        }
+    }
+}
 function CookieObj(){
     var count = 1;
     return {
@@ -238,27 +325,8 @@ function CookieObj(){
     undone.eq(new Date()%count).click();
 })(0);
 
-if(document.cookie){
-    console.log('there is cookie !!!');
-    buildFromCookie();
-}
 
 
-function buildFromCookie(){
-
-    for(var i = 0; i < 20; i++){
-        if(getCookie('v' + i)){
-            var sts = getCookie('s' + i)
-            var text = '' + getCookie('v' + i);
-            var messageElem = createMessage(text);
-            messageElem.find('.undone').attr('class', sts);
-            indexNumber++;
-            $('#main').append(messageElem);
-        }
-    }
-
-    $('#topLeftNoneTask').attr('id', 'topLeftThereTask');
-}
 
 function getCookie(cname) {
     var name = cname + "=";
