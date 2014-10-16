@@ -82,6 +82,7 @@ mainWindow.on('click', '.delete', function(event){
     if(checkTasks() == 0){
         $('#topLeftThereTask').attr('id', 'topLeftNoneTask');
     }
+
     return;
 })
 
@@ -218,9 +219,7 @@ function Cookie(){
             }
             count++;
         }
-
         buildFromCookie();
-
     }
 
     function buildFromCookie(){
@@ -228,6 +227,7 @@ function Cookie(){
             var sts = getStatus(i);
             var text = '' + getValue(i);
             var messageElem = createMessage(text);
+            messageElem .attr('indexNumber', i);
             messageElem.find('.undone').attr('class', sts);
             indexNumber++;
             $('#main').append(messageElem);
@@ -245,8 +245,10 @@ function Cookie(){
     }
     function rename(index){
         var i = new Number(index);
+        var indNum = $('.bodyOfTask');
         for(; i <= count; i++){
             $.cookie('O' + i, $.cookie('O' + (i+1)), { expires: 5});
+            indNum.eq(i).attr('indexNumber', (i));
         }
         $.cookie('O' + count, null, { expires: 0});
         count--;
