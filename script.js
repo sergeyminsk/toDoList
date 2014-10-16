@@ -1,7 +1,6 @@
 /*   */
 var mainInput = $('#mainInput');
 var mainWindow = $('#main');
-var cookieObj = new CookieObj();
 var cookie = new Cookie();
 var indexNumber = 1;
 
@@ -82,7 +81,7 @@ mainWindow.on('click', '.delete', function(event){
     if(checkTasks() == 0){
         $('#topLeftThereTask').attr('id', 'topLeftNoneTask');
     }
-
+//    $.cookie('O0', null, {expires:0}); //  !!!! ???
     return;
 })
 
@@ -189,29 +188,25 @@ function selectAll(){
     $('.undone').each(function(i, a){
         a.setAttribute('class', 'done');
     });
-    $('.bodyOfTask').each(function(i, a){
-        var index = a.getAttribute('indexNumber');
-//        cookieObj.changeS(index, 'done');
-    });
+    for(var i = 1; i <= cookie.count(); i++){
+        cookie.changeStatus(i, 'done');
+    }
 }
 /* unselect all tasks */
 function unselectAll(){
     $('.done').each(function(i, a){
         a.setAttribute('class', 'undone');
     });
-    $('.bodyOfTask').each(function(i, a){
-        var index = a.getAttribute('indexNumber');
-//        cookieObj.changeS(index, 'undone');
-    });
+    for(var i = 1; i <= cookie.count(); i++){
+        cookie.changeStatus(i, 'undone');
+    }
 }
 
 /* adds/change/remove from cookie */
 function Cookie(){
     var count = 0;
-    console.log('start');
 
     if(document.cookie){
-        console.log('there is cookie !!!');
 
         while(true){
             if(document.cookie.search('O' + (count + 1)) == -1){
@@ -287,26 +282,6 @@ function Cookie(){
         }
     }
 }
-function CookieObj(){
-    var count = 1;
-    return {
-        add: function(index, value, status){
-            $.cookie("v" + +index, value, { expires: 5});
-            $.cookie("s" + +index, status, { expires: 5});
-            count++;
-        },
-        changeV: function(index, value){
-            $.cookie("v" + index, value, { expires: 5});
-        },
-        changeS: function(index, status){
-            $.cookie("s" + index, status, { expires: 5});
-        },
-        remove: function(index){
-            $.cookie('v' + +index, null, { expires: 0});
-            $.cookie('s' + +index, null, { expires: 0});
-        }
-    }
-}
 
 /* emulator of input */
 (function(count){
@@ -327,16 +302,3 @@ function CookieObj(){
     undone.eq(new Date()%count).click();
 })(0);
 
-
-
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
-    }
-    return "";
-}
