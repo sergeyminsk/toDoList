@@ -108,6 +108,30 @@
     width: 61px;
     height: 62px;
 }
+
+#filter {
+    width: 300px;
+    height: 30px;
+    border: 5px solid gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+/*    margin: auto;*/
+    /*position: absolute;*/
+
+    display: none;
+}
+#filterInput {
+    width: 286px;
+    height: 24px;
+    padding-left: 10px;
+}
+
+#butHideShow {
+    float: left;
+}
+
 div.bodyOfTask:hover .delete:hover{
     background-image: url("img/deleteSign.jpg");
 }

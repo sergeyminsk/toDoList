@@ -3,6 +3,34 @@ var mainInput = $('#mainInput');
 var mainWindow = $('#main');
 var cookie = new Cookie();
 var indexNumber = 1;
+var statFilBot = false;
+var inputFilterDiv = $('#filter');
+
+$('#butHideShow').on('click', function(){
+
+    if(statFilBot){
+        inputFilterDiv.hide();
+        statFilBot = false;
+        mainInput.focus();
+    }else{
+        if($('.text').size() == 0){return;}
+        inputFilterDiv.show();
+        statFilBot = true;
+        $('#filterInput').focus();
+    }
+})
+
+$('#filterInput').on('input', function(){
+    var inputVal = $(this).val();
+    var textArr = $('.text');
+
+    if(textArr.size() == 0 ){return;}
+
+
+
+    console.log(textArr.eq(0).html().indexOf(inputVal));
+});
+
 
 /*generate task with text*/
 function createMessage(text) {
@@ -70,6 +98,7 @@ mainWindow.on('click', '.delete', function(){
 
     if(checkTasks() == 0){
         $('#topLeftThereTask').prop('id', 'topLeftNoneTask');
+        inputFilterDiv.hide(200);
     }
 //    $.cookie('O0', null, {expires:0}); //  !!!! ???
     return;
