@@ -5,6 +5,7 @@ var cookie = new Cookie();
 var indexNumber = 1;
 var statFilBot = false;
 var inputFilterDiv = $('#filter');
+var filterInput = $('#filterInput');
 
 $('#butHideShow').on('click', function(){
 
@@ -12,23 +13,37 @@ $('#butHideShow').on('click', function(){
         inputFilterDiv.hide();
         statFilBot = false;
         mainInput.focus();
+        filterInput.val('')
+                   .trigger('input');
     }else{
         if($('.text').size() == 0){return;}
         inputFilterDiv.show();
         statFilBot = true;
-        $('#filterInput').focus();
+        filterInput.focus();
     }
 })
 
-$('#filterInput').on('input', function(){
-    var inputVal = $(this).val();
+filterInput.on('input', function(){
     var textArr = $('.text');
 
-    if(textArr.size() == 0 ){return;}
+    if(textArr.size() == 0 ){
+        return;
+    }
+
+    var allTasks = $('.bodyOfTask')
+
+    for(var i = 0; i < allTasks.length; i++){
+
+        if(textArr.eq(i).html().indexOf(filterInput.val()) == -1){
+            allTasks.eq(i).hide();
+            continue;
+        }
+
+        allTasks.eq(i).show();
+
+    }
 
 
-
-    console.log(textArr.eq(0).html().indexOf(inputVal));
 });
 
 
