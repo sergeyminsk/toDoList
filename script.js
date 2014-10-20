@@ -42,10 +42,7 @@ filterInput.on('input', function(){
         allTasks.eq(i).show();
 
     }
-
-
 });
-
 
 /*generate task with text*/
 function createMessage(text) {
@@ -211,6 +208,8 @@ mainInput.on('keydown', function(e){
     $('#main').append(messageElem);
 
     mainInput.val('');
+
+    filterInput.trigger('input');
 });
 
 function checkTasks(){
