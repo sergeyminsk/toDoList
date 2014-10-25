@@ -1,8 +1,130 @@
 /*   */
 var mainInput = $('#mainInput');
 var mainWindow = $('#main');
-var cookie = new Cookie();
+var Cookie;
 var indexNumber = 1;
+
+/* adds/change/remove from cookie (used pattern Singleton)*/
+(function(){
+    var instance;
+    var anticlone_proxy;
+
+
+    Cookie = function(){
+        var count= 0;
+
+        if(document.cookie){
+
+            while(true){
+                if(document.cookie.search('O' + (count + 1)) == -1){
+                    break;
+                }
+                count++;
+                indexNumber++;
+            }
+            buildFromCookie();
+        }
+
+        function buildFromCookie(){
+            for(var i = 1; i <= count; i++){
+                var sts = getStatus(i);
+                var text = '' + getValue(i);
+                var messageElem = createMessage(text);
+                messageElem.data('indexNumber', i);
+                messageElem.find('.undone').removeClass('undone').addClass(sts);
+                $('#main').append(messageElem);
+            }
+
+            $('#topLeftNoneTask').prop('id', 'topLeftThereTask');
+        }
+        function getStatus(index){
+            var fromCookie = $.cookie('O' + index);
+            return JSON.parse(fromCookie).s;
+        }
+        function getValue(index){
+            var fromCookie = $.cookie('O' + index);
+            return JSON.parse(fromCookie).v;
+        }
+        function rename(index){
+            var i = new Number(index);
+            var indNum = $('.bodyOfTask');
+            for(; i <= count; i++){
+                $.cookie('O' + i, $.cookie('O' + (i+1)), { expires: 5});
+                indNum.eq(i).data('indexNumber', (i));
+            }
+            $.cookie('O' + count, null, { expires: 0});
+            count--;
+        }
+
+        if( instance ){
+            console.log('attempt to create another one instance ! ! !');
+            return instance;
+        }
+
+        instance =
+        {
+            add: function(index, status, value){
+                count++;
+                var valInObj = {s: arguments[1], v: arguments[2]};
+                $.cookie('O' + arguments[0], JSON.stringify(valInObj), { expires: 5});
+            },
+            changeStatus: function(index, status){
+                var fromCookie = $.cookie('O' + index);
+                var obj = JSON.parse(fromCookie);
+                obj.s = status;
+                $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
+            },
+            changeValue: function(index, value){
+                var fromCookie = $.cookie('O' + index);
+                var obj = JSON.parse(fromCookie);
+                obj.v = value;
+                $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
+            },
+            getStatus: function(index){
+                getStatus(index);
+            },
+            getValue: function(index){
+                getValue(index);
+            },
+            remove: function(index){
+                rename(index)
+            },
+            count: function(){
+                return count;
+            }
+        }
+
+        anticlone_proxy =
+        {
+            add: function(){
+                return instance.add.apply(this, arguments);
+            },
+            changeStatus: function(){
+                return instance.changeStatus.apply(this, arguments);
+            },
+            changeValue: function(){
+                return instance.changeValue.apply(this, arguments);
+            },
+            getStatus: function(){
+                return instance.getStatus.apply(this, arguments);
+            },
+            getValue: function(){
+                return instance.getValue.apply(this, arguments);
+            },
+            remove: function(){
+                return instance.remove.apply(this, arguments);
+            },
+            count: function(){
+                return instance.count.apply(this, arguments);;
+            }
+        }
+
+        return anticlone_proxy;
+    };
+})();
+
+
+var cookie = new Cookie();
 var statFilBot = false;
 var inputFilterDiv = $('#filter');
 var filterInput = $('#filterInput');
@@ -235,102 +357,5 @@ function unselectAll(){
     }
 }
 
-/* adds/change/remove from cookie */
-function Cookie(){
-    var count = 0;
 
-    if(document.cookie){
 
-        while(true){
-            if(document.cookie.search('O' + (count + 1)) == -1){
-                break;
-            }
-            count++;
-        }
-        buildFromCookie();
-    }
-
-    function buildFromCookie(){
-        for(var i = 1; i <= count; i++){
-            var sts = getStatus(i);
-            var text = '' + getValue(i);
-            var messageElem = createMessage(text);
-            messageElem.data('indexNumber', i);
-            messageElem.find('.undone').removeClass('undone').addClass(sts);
-            indexNumber++;
-            $('#main').append(messageElem);
-        }
-
-        $('#topLeftNoneTask').prop('id', 'topLeftThereTask');
-    }
-    function getStatus(index){
-        var fromCookie = $.cookie('O' + index);
-        return JSON.parse(fromCookie).s;
-    }
-    function getValue(index){
-        var fromCookie = $.cookie('O' + index);
-        return JSON.parse(fromCookie).v;
-    }
-    function rename(index){
-        var i = new Number(index);
-        var indNum = $('.bodyOfTask');
-        for(; i <= count; i++){
-            $.cookie('O' + i, $.cookie('O' + (i+1)), { expires: 5});
-            indNum.eq(i).data('indexNumber', (i));
-        }
-        $.cookie('O' + count, null, { expires: 0});
-        count--;
-    }
-
-    return {
-        add: function(index, status, value){
-            count++;
-            var valInObj = {s: status, v: value};
-            $.cookie('O' + index, JSON.stringify(valInObj), { expires: 5});
-
-        },
-        changeStatus: function(index, status){
-            var fromCookie = $.cookie('O' + index);
-            var obj = JSON.parse(fromCookie);
-            obj.s = status;
-            $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
-        },
-        changeValue: function(index, value){
-            var fromCookie = $.cookie('O' + index);
-            var obj = JSON.parse(fromCookie);
-            obj.v = value;
-            $.cookie('O' + index, JSON.stringify(obj), { expires: 5});
-        },
-        getStatus: function(index){
-            getStatus(index);
-        },
-        getValue: function(index){
-            getValue(index);
-        },
-        remove: function(index){
-            rename(index)
-        },
-        count: function(){
-            return count;
-        }
-    }
-}
-
-/* emulator of input */
-(function(count){
-    if(count == 0){return;}
-    var e = jQuery.Event("keydown", { keyCode: 13 });
-
-    for(var i = 0; i < count; i++){
-        if(i%3 == 0){
-            mainInput.val(new Date()%10000000000000000);
-            mainInput.trigger(e);
-            continue;
-        }
-        mainInput.val(new Date());
-        mainInput.trigger(e);
-    }
-    var undone = $('.undone');
-    undone.eq(new Date()%count).click();
-    undone.eq(new Date()%count).click();
-})(0);
